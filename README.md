@@ -8,8 +8,13 @@ This is a simple Node app that will:
 
 The app uses express-generator with pug as the templating engine
 
-To get started:
+## To get started:
 * Download this repo
 * Run `npm install` to get packages
 * Run `npm start` to start server
 * Go to [http://localhost:3000](http://localhost:3000) to load home page
+
+## Environment variables:
+Create an .env file in the root of your app with the following information:
+* ACCESS_TOKEN=\<your access token\>
+* CLIENT_ID=\<your client id\>
