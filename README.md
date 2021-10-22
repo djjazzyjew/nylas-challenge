@@ -6,6 +6,8 @@ This is a simple Node app that will:
 * Send an email to yourself via the Nylas API
 * Query the API for the email you sent and change the label to `nylas_challenge`
 
+The app uses express-generator with pug as the templating engine
+
 To get started:
 * Download this repo
 * Run `npm install` to get packages
