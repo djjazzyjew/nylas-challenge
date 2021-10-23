@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -17,8 +18,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 var nylasAppConfigs = {
-  clientId: '<YOUR CLIENT ID>',
-  clientSecret: '<YOUR CLIENT SECRET>',
+  clientId: '<YOUR_CLIENT_ID>
+  clientSecret: '<YOUR_CLIENT_SECRET>'
 };
 
 // setup the Nylas API
@@ -28,6 +29,21 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+// set up session management
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(
+  session(
+    Object.assign(
+      {
+        resave: false,
+        saveUninitialized: true,
+        cookie: { maxAge: oneDay },
+        secret: '<YOUR_SESSION_SECRET>'
+      },
+    )
+  )
+);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

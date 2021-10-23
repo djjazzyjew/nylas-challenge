@@ -1,4 +1,5 @@
 var express = require('express');
+const { rawListeners } = require('../app');
 var router = express.Router();
 
 /* GET home page. */
@@ -13,5 +14,9 @@ router.get('/connect', (req, res, next) => {
   };
   res.redirect(Nylas.urlForAuthentication(options));
 });
+
+router.get('/connect/success', (req, res, next) => {
+  res.render('emailconnected', { title: 'Success', message: `You've successfully connected your account!` });
+})
 
 module.exports = router;
