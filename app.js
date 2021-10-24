@@ -10,6 +10,7 @@ var usersRouter = require('./routes/users');
 var testRouter = require('./routes/test');
 var emailRouter = require('./routes/email');
 var oauthRouter = require('./routes/oauth');
+var messageRouter = require('./routes/message');
 
 var app = express();
 
@@ -18,7 +19,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 var nylasAppConfigs = {
-  clientId: '<YOUR_CLIENT_ID>
+  clientId: '<YOUR_CLIENT_ID>',
   clientSecret: '<YOUR_CLIENT_SECRET>'
 };
 
@@ -51,6 +52,7 @@ app.use('/users', usersRouter);
 app.use('/test', testRouter);
 app.use('/email', emailRouter);
 app.use('/oauth', oauthRouter);
+app.use('/message', messageRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
