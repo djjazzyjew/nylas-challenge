@@ -18,3 +18,4 @@ The app uses express-generator with pug as the templating engine
 Create an .env file in the root of your app with the following information:
 * ACCESS_TOKEN=\<your access token\>
 * CLIENT_ID=\<your client id\>
+* CLIENT_SECRET=\<your client secret\>
