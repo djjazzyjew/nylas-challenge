@@ -1,6 +1,7 @@
 var express = require('express');
 const Nylas = require('nylas');
 const { access_token, client_id, client_secret } = require('../config');
+const logger = require('../logger');
 var router = express.Router();
 
 Nylas.config({
@@ -19,26 +20,26 @@ function checkLabel (label) {
 }
 
 function createAndApplyLabel () {
+  logger.info(`-------------------------------`);
   if ( !labelToUpdate ) {
-      console.log(`Creating New Label: ${labelName}`)
+      logger.info(`Creating New Label: ${labelName}`)
       labelToUpdate = nylas.labels.build({displayName: labelName});
       labelToUpdate.save().then(label => {
           addLabelToMostRecentMessage(label);
       });
   } else {
-      console.log(`${labelName} already exists!`)
+      logger.info(`${labelName} already exists!`)
       addLabelToMostRecentMessage(labelToUpdate);
   }
 }
 
 function addLabelToMostRecentMessage (label) {
+  logger.info(`-------------------------------`);
   nylas.messages.first().then(msg => {
     msg.labels.push(label);
-    console.log(`${label.displayName} applied to the most recent email.`)
+    logger.info(`${label.displayName} applied to the most recent email.`)
     msg.save().then(savedMsg => {
-      console.log(`Subject: ${savedMsg.subject}`);
-      console.log("This email contains the following labels")
-      console.log(savedMsg.labels);
+      logger.info(`Subject: ${savedMsg.subject}`);
     })
   })
 }
@@ -69,26 +70,13 @@ router.get('/send', (req, res, next) => {
 
   // Send the draft
   draft.send().then(message => {
-    console.log(`${message.id} was sent`);
+    logger.info(`${message.id} was sent`);
   });
 
   res.render('email', { title: 'Email sent', message: `You've successfully sent an email. Check your inbox!`});
 })
 
 router.get('/change-label', (req, res, next) => {
-
-  // List out current labels in account
-  nylas.account.get().then(account =>{
-    if (account.organizationUnit == 'label') {
-        nylas.labels.list({}).then(labels => {
-            console.log("This account contains the following labels:")
-            for (const label of labels) {
-              console.log(`Name: ${label.displayName} | ID: ${label.id}`);
-            }
-          });
-      }
-  });
-
   nylas.account.get().then(account => {
     if (account.organizationUnit == 'label') {
       nylas.labels.forEach({}, checkLabel, createAndApplyLabel);

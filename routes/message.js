@@ -1,4 +1,5 @@
 var express = require('express');
+const logger = require('../logger');
 var router = express.Router();
 
 /* Message Created Webhook */
@@ -9,13 +10,13 @@ router.get('/created', (req, res, next) => {
 
 // POST to handle webhook events
 router.post('/created', (req, res, next) => {
-  console.log(`-------------------------------`);
-  console.log('Message.Created webhook called');
+  logger.info(`-------------------------------`);
+  logger.info('Message.Created webhook called');
 
   const data = req.body.deltas;
-  console.log(JSON.stringify(data, null, 2));
+  logger.info(JSON.stringify(data, null, 2));
   for (var i = 0; i < data.length; i++) {
-    console.log(
+    logger.info(
       '%s at %s with id %s',
       data[i].type,
       data[i].date,
@@ -34,13 +35,13 @@ router.get('/updated', (req, res, next) => {
 
 // POST to handle webhook events
 router.post('/updated', (req, res, next) => {
-  console.log(`-------------------------------`);
-  console.log('Message.Updated webhook called');
-  
+  logger.info(`-------------------------------`);
+  logger.info('Message.Updated webhook called');
+
   const data = req.body.deltas;
-  console.log(JSON.stringify(data, null, 2));
+  logger.info(JSON.stringify(data, null, 2));
   for (var i = 0; i < data.length; i++) {
-    console.log(
+    logger.info(
       '%s at %s with id %s',
       data[i].type,
       data[i].date,

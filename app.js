@@ -3,10 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var logger = require('morgan');
+const httpLogger = require('./httpLogger')
+const logger = require('./logger');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var testRouter = require('./routes/test');
 var emailRouter = require('./routes/email');
 var oauthRouter = require('./routes/oauth');
@@ -26,7 +26,7 @@ var nylasAppConfigs = {
 // setup the Nylas API
 global.Nylas = require('nylas').config(nylasAppConfigs);
 
-app.use(logger('dev'));
+//app.use(httpLogger)
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -48,7 +48,6 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/test', testRouter);
 app.use('/email', emailRouter);
 app.use('/oauth', oauthRouter);
@@ -61,6 +60,7 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+  logger.error("An error occurred: " + err);
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

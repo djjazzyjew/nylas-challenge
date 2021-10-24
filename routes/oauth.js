@@ -1,4 +1,5 @@
 var express = require('express');
+const logger = require('../logger');
 var router = express.Router();
 
 // Handle OAuth response
