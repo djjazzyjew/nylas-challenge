@@ -20,13 +20,17 @@ const httpLogger = morgan(format, {
         responseTime
       } = JSON.parse(message)
 
+      // Remove newline char from Morgan logs
+      message = message.slice(0, -1);
+
       logger.info('HTTP Access Log', {
-        timestamp: new Date().toString(),
+        message,
+       /*  timestamp: new Date(),
         method,
         url,
         status: Number(status),
         contentLength,
-        responseTime: Number(responseTime)
+        responseTime: Number(responseTime) */
       })
     }
   }

@@ -26,7 +26,7 @@ var nylasAppConfigs = {
 // setup the Nylas API
 global.Nylas = require('nylas').config(nylasAppConfigs);
 
-//app.use(httpLogger)
+app.use(httpLogger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

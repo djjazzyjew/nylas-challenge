@@ -20,26 +20,26 @@ function checkLabel (label) {
 }
 
 function createAndApplyLabel () {
-  logger.info(`-------------------------------`);
+  logger.debug(`-------------------------------`);
   if ( !labelToUpdate ) {
-      logger.info(`Creating New Label: ${labelName}`)
+      logger.debug(`Creating New Label: ${labelName}`)
       labelToUpdate = nylas.labels.build({displayName: labelName});
       labelToUpdate.save().then(label => {
           addLabelToMostRecentMessage(label);
       });
   } else {
-      logger.info(`${labelName} already exists!`)
+      logger.debug(`${labelName} already exists!`)
       addLabelToMostRecentMessage(labelToUpdate);
   }
 }
 
 function addLabelToMostRecentMessage (label) {
-  logger.info(`-------------------------------`);
+  logger.debug(`-------------------------------`);
   nylas.messages.first().then(msg => {
     msg.labels.push(label);
-    logger.info(`${label.displayName} applied to the most recent email.`)
+    logger.debug(`${label.displayName} applied to the most recent email.`)
     msg.save().then(savedMsg => {
-      logger.info(`Subject: ${savedMsg.subject}`);
+      logger.debug(`Subject: ${savedMsg.subject}`);
     })
   })
 }
@@ -63,14 +63,14 @@ router.get('/connect/success', (req, res, next) => {
 
 router.get('/send', (req, res, next) => {
   const draft = nylas.drafts.build({
-    subject: 'With Love, from Nylas',
-    to: [{ name: 'My Nylas Friend', email: 'nylasadam21@gmail.com' }],
-    body: 'This email was sent using the Nylas email API. Visit https://nylas.com for details.'
+    subject: 'The Nylas take home challenge',
+    to: [{ name: 'Adam', email: 'nylasadam21@gmail.com' }],
+    body: 'Welcome to the Nylas take home challenge.  Do you accept?'
   });
 
   // Send the draft
   draft.send().then(message => {
-    logger.info(`${message.id} was sent`);
+    logger.debug(`Email with message id = ${message.id} was sent`);
   });
 
   res.render('email', { title: 'Email sent', message: `You've successfully sent an email. Check your inbox!`});
