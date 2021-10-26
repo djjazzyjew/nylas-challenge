@@ -17,10 +17,7 @@ router.post('/created', (req, res, next) => {
   logger.info(JSON.stringify(data, null, 2));
   for (var i = 0; i < data.length; i++) {
     logger.info(
-      '%s at %s with id %s',
-      data[i].type,
-      data[i].date,
-      data[i].object_data.id
+      `${data[i].type} at ${data[i].date} with id ${data[i].object_data.id}`
     );
   }
 
@@ -42,10 +39,7 @@ router.post('/updated', (req, res, next) => {
   logger.info(JSON.stringify(data, null, 2));
   for (var i = 0; i < data.length; i++) {
     logger.info(
-      '%s at %s with id %s',
-      data[i].type,
-      data[i].date,
-      data[i].object_data.id
+      `${data[i].type} at ${data[i].date} with id ${data[i].object_data.id}`
     );
   }
 
