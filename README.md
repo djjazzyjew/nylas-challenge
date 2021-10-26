@@ -19,3 +19,4 @@ Create an .env file in the root of your app with the following information:
 * ACCESS_TOKEN=\<your access token\>
 * CLIENT_ID=\<your client id\>
 * CLIENT_SECRET=\<your client secret\>
+* SESSION_SECRET=\<your session secret\>
