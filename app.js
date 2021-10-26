@@ -19,8 +19,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 var nylasAppConfigs = {
-  clientId: '<YOUR_CLIENT_ID>',
-  clientSecret: '<YOUR_CLIENT_SECRET>'
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
 };
 
 // setup the Nylas API
@@ -39,7 +39,7 @@ app.use(
         resave: false,
         saveUninitialized: true,
         cookie: { maxAge: oneDay },
-        secret: '<YOUR_SESSION_SECRET>'
+        secret: process.env.SESSION_SECRET,
       },
     )
   )
